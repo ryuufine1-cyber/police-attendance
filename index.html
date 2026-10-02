@@ -1,266 +1,274 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ARP Police Attendance</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You, Forever ♡</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#0b1120;color:#fff;font:15px Arial,sans-serif}
-.hidden{display:none!important}.login{min-height:100vh;display:grid;place-items:center;padding:20px}
-.box,.card{background:#1e293b;border-radius:16px;box-shadow:0 12px 35px #0006}.box{width:min(430px,100%);padding:28px;text-align:center}
-.logo{width:125px;height:125px;object-fit:cover;border-radius:50%}.muted,.small{color:#94a3b8}.small{font-size:13px}
-input,select{width:100%;padding:12px;margin:7px 0 14px;border:1px solid #475569;border-radius:8px;background:#0f172a;color:#fff}
-button{width:100%;padding:12px;margin-top:7px;border:0;border-radius:8px;font-weight:700;cursor:pointer}.blue{background:#2563eb;color:#fff}.red{background:#dc2626;color:#fff}.gray{background:#475569;color:#fff}.green{background:#16a34a;color:#fff}
-header{background:#111827;border-bottom:2px solid #334155}.banner{width:100%;max-height:230px;object-fit:cover;display:block}.head{text-align:center;padding:18px}.head img{width:82px;height:82px;object-fit:cover;border-radius:50%}
-.wrap{max-width:850px;margin:24px auto;padding:0 16px}.card{padding:20px;margin-bottom:18px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-@media(max-width:650px){.grid{grid-template-columns:1fr}}.stat{background:#0f172a;padding:14px;border-radius:10px}.big{font-size:24px;font-weight:700}
-.greenText{color:#22c55e}.gold{color:#fbbf24}.notice{padding:14px;border-radius:10px;background:#164e63;border:1px solid #0891b2;margin-bottom:15px}
-.officer,.history{background:#0f172a;border-radius:10px;padding:14px;margin-top:10px}.officer{border-left:4px solid #22c55e}
-.proofs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.proof{width:110px;height:90px;object-fit:cover;border-radius:7px}
-.row{display:flex;gap:8px}.row>*{flex:1}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+body{
+  background:#05030a;color:#fff;
+  font-family:Georgia,"Times New Roman",serif;
+}
+canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+.vignette{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(circle at 50% 45%,rgba(255,72,150,.12),transparent 35%),
+             radial-gradient(circle at 50% 50%,transparent 30%,rgba(0,0,0,.78) 100%);
+}
+.wrap{
+  position:relative;z-index:2;width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;padding:22px;
+}
+.card{
+  width:min(760px,94vw);max-height:92vh;overflow:auto;
+  padding:42px 30px 30px;text-align:center;
+  border:1px solid rgba(255,255,255,.11);border-radius:30px;
+  background:rgba(12,7,19,.54);
+  box-shadow:0 25px 100px rgba(0,0,0,.6),0 0 90px rgba(255,50,140,.08);
+  backdrop-filter:blur(12px);
+}
+.eyebrow{
+  font:11px Arial,sans-serif;letter-spacing:5px;text-transform:uppercase;
+  opacity:.55;margin-bottom:17px;
+}
+h1{
+  font-size:clamp(42px,9vw,78px);line-height:.96;font-weight:400;
+  letter-spacing:-2px;text-shadow:0 0 32px rgba(255,100,180,.35);
+}
+.subtitle{
+  max-width:610px;margin:20px auto 0;
+  font-size:clamp(15px,3vw,19px);line-height:1.8;opacity:.82;
+}
+.heart{
+  width:104px;height:104px;margin:34px auto 24px;
+  position:relative;transform:rotate(-45deg);
+  animation:beat 1.35s ease-in-out infinite;
+  filter:drop-shadow(0 0 27px rgba(255,50,140,.58));
+}
+.heart:before,.heart:after,.core{
+  content:"";position:absolute;width:104px;height:104px;border-radius:50%;
+  background:linear-gradient(135deg,#ff9dcc,#ff2f83 62%,#a9004c);
+}
+.heart:before{top:-52px}.heart:after{left:52px}.core{inset:0}
+.heart span{
+  position:absolute;z-index:3;inset:0;display:flex;align-items:center;justify-content:center;
+  transform:rotate(45deg);font:700 11px Arial,sans-serif;white-space:nowrap;
+  margin:8px 0 0 -6px;
+}
+@keyframes beat{
+  0%,100%{transform:rotate(-45deg) scale(1)}
+  10%{transform:rotate(-45deg) scale(1.09)}
+  20%{transform:rotate(-45deg) scale(1)}
+  30%{transform:rotate(-45deg) scale(1.06)}
+}
+#typed{font-size:18px;line-height:1.7;opacity:.9}
+.cursor{
+  display:inline-block;width:1px;height:1em;background:#fff;
+  vertical-align:-2px;margin-left:3px;animation:blink .7s infinite;
+}
+@keyframes blink{50%{opacity:0}}
+
+.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:25px}
+button{
+  border:1px solid rgba(255,255,255,.17);background:rgba(255,255,255,.07);
+  color:#fff;border-radius:999px;padding:13px 22px;cursor:pointer;
+  font:600 13px Arial,sans-serif;transition:.25s;
+}
+button:hover{transform:translateY(-2px);background:rgba(255,70,150,.17)}
+.song{
+  margin:20px auto 0;width:min(540px,90vw);
+  max-height:0;overflow:hidden;opacity:0;transition:.65s ease;
+}
+.song.open{max-height:180px;opacity:1}
+iframe{width:100%;height:152px;border:0;border-radius:14px}
+.letter{
+  max-width:620px;margin:25px auto 0;
+  text-align:left;line-height:1.9;font-size:17px;
+  opacity:0;transform:translateY(15px);max-height:0;overflow:hidden;
+  transition:1s ease;
+}
+.letter.open{opacity:.94;transform:none;max-height:650px}
+.letter p{margin-bottom:15px}
+.signature{text-align:right;font-style:italic;opacity:.8;margin-top:22px}
+.footer{margin-top:22px;font:10px Arial,sans-serif;letter-spacing:2px;opacity:.38}
+
+.countdown{
+  position:fixed;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;
+  background:#05030a;transition:.9s ease;
+}
+.countdown.hide{opacity:0;visibility:hidden}
+.count-number{
+  font:700 clamp(100px,25vw,230px)/1 Arial,sans-serif;
+  text-shadow:0 0 55px rgba(255,80,170,.7);animation:pop .9s ease;
+}
+@keyframes pop{0%{transform:scale(.35);opacity:0}60%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}
+
+.toast{
+  position:fixed;left:50%;bottom:25px;z-index:20;
+  transform:translate(-50%,20px);opacity:0;pointer-events:none;
+  padding:11px 17px;border-radius:999px;
+  background:rgba(15,8,22,.9);border:1px solid rgba(255,255,255,.12);
+  font:12px Arial,sans-serif;transition:.3s;
+}
+.toast.show{transform:translate(-50%,0);opacity:1}
+
+@media(max-width:560px){
+ .card{padding:32px 18px 25px}
+ .heart{width:90px;height:90px}
+ .heart:before,.heart:after,.core{width:90px;height:90px}
+ .heart:before{top:-45px}.heart:after{left:45px}
+ .heart span{font-size:10px}
+ .letter{font-size:15px}
+}
 </style>
 </head>
 <body>
+<canvas id="canvas"></canvas>
+<div class="vignette"></div>
 
-<div id="login" class="login">
-<div class="box">
-<img class="logo" src="logo.png" onerror="this.style.display='none'">
-<h1>POLICE DEPARTMENT</h1><p class="muted">Officer Attendance System</p>
-<button class="blue" onclick="signInWithDiscord()">LOGIN WITH DISCORD</button>
-<p id="loginMsg" class="small">Akses hanya untuk Discord yang sudah di-authorized.</p>
-</div></div>
-
-<div id="app" class="hidden">
-<header>
-<img class="banner" src="banner.gif" onerror="this.style.display='none'">
-<div class="head"><img src="logo.png" onerror="this.style.display='none'"><h1>POLICE DEPARTMENT</h1><p class="muted">OFFICER ATTENDANCE SYSTEM</p></div>
-</header>
+<div class="countdown" id="countdown">
+  <div class="count-number" id="countNumber">3</div>
+</div>
 
 <main class="wrap">
-<div id="promotionNotice"></div>
+<section class="card">
+  <div class="eyebrow">for the person who stayed</div>
+  <h1>For You, Forever.</h1>
 
-<div class="card">
-<h2>Officer Profile</h2>
-<div class="grid">
-<div><label>Nama</label><input id="name" placeholder="Nama RP"></div>
-<div><label>Callsign</label><input id="callsign" placeholder="6473"></div>
-<div><label>Pangkat</label><select id="rank"></select></div>
-</div>
-<p class="small">Pangkat ditetapkan oleh sistem. Setelah syarat jam duty terpenuhi, sistem akan memberi notifikasi kenaikan pangkat.</p>
-</div>
+  <div class="heart">
+    <div class="core"></div>
+    <span>I LOVE YOU</span>
+  </div>
 
-<div class="card">
-<h2>Duty</h2>
-<div class="grid">
-<div class="stat">Status<br><span id="status" class="big">OFF DUTY</span></div>
-<div class="stat">Total Jam Duty<br><span id="totalHours" class="big">0.00 h</span></div>
-<div class="stat">Total Gaji<br><span id="totalPay" class="big">Rp0</span></div>
-<div class="stat">Duty Selesai<br><span id="totalDuties" class="big">0</span></div>
-</div>
-<label>Officer lain yang memverifikasi duty</label>
-<select id="verifier"><option value="">Pilih officer lain</option></select>
-<button id="clockInBtn" class="green" onclick="clockIn()">CLOCK IN</button>
-<button id="clockOutBtn" class="red" onclick="openClockOut()" disabled>CLOCK OUT</button>
-<div id="dutyBox" class="notice hidden"></div>
-</div>
+  <div id="typed"></div><span class="cursor"></span>
 
-<div id="clockOutCard" class="card hidden">
-<h2>Submit Duty Report</h2>
-<p class="small">Saat CLOCK OUT, laporan masuk ke antrean verifier. Officer lain yang dipilih saat CLOCK IN akan mengisi nominal gaji dan menyetujui laporan.</p>
-<label>Bukti Duty — wajib, maksimal 3 screenshot</label>
-<input id="proofs" type="file" accept="image/*" multiple>
-<p id="fileMsg" class="small">Pilih 1–3 screenshot.</p>
-<button class="blue" onclick="submitClockOut()">SUBMIT DUTY FOR VERIFICATION</button>
-</div>
+  <div class="actions">
+    <button id="openBtn">Open my heart ♡</button>
+  </div>
 
-<div id="verifyCard" class="card hidden">
-<h2>Verifier Queue</h2>
-<p class="small">Laporan yang ditujukan kepada akunmu. Isi gaji lalu approve.</p>
-<div id="verifyQueue">Loading...</div>
-</div>
+  <div class="song" id="song">
+    <iframe
+      id="spotify"
+      src="https://open.spotify.com/embed/track/35o9a4iAfLl5jRmqMX9c1D?utm_source=generator&autoplay=1"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="eager">
+    </iframe>
+  </div>
 
-<div class="card"><h2>Active Officers</h2><div id="active">Loading...</div></div>
-<div class="card"><h2>Attendance History</h2><div id="history">Loading...</div></div>
+  <div class="letter" id="letter">
+    <p>
+      Sayang,
+    </p>
+    <p>
+      Makasih ya, udah bertahan sejauh ini. Makasih karena di antara
+      banyak hal yang mungkin nggak selalu mudah, kamu masih memilih
+      untuk tetap tinggal, tetap bersama, dan tetap berjalan sama aku.
+    </p>
+    <p>
+      Aku mungkin nggak selalu bisa menemukan kata yang paling indah
+      untuk menjelaskan apa yang aku rasakan. Tapi satu hal yang aku
+      tahu, kehadiran kamu punya tempat yang berbeda di hidup aku.
+      Kamu bukan cuma seseorang yang aku sayang, tapi seseorang yang
+      ingin terus aku temui di hari-hari yang akan datang.
+    </p>
+    <p>
+      Kalau nanti ada hari yang berat, semoga kita nggak memilih untuk
+      saling meninggalkan. Kalau ada hari yang bahagia, semoga kita
+      masih bisa tertawa dan menikmatinya bersama.
+    </p>
+    <p>
+      Jadi... jangan cuma bertahan sampai hari ini, ya?
+      <strong>Terus bersama aku. Selama-lamanya.</strong>
+    </p>
+    <p>
+      Terima kasih sudah menjadi bagian dari perjalanan ini.
+      Terima kasih sudah tetap di sini.
+      Dan kalau aku boleh meminta satu hal untuk masa depan,
+      aku cuma ingin tetap punya kamu di dalamnya.
+    </p>
+    <p class="signature">
+      With all my heart,<br>
+      someone who will always choose you. ♡
+    </p>
+  </div>
 
-<div id="adminCard" class="card hidden">
-<h2>Admin Panel</h2>
-<div class="grid">
-<div class="stat">Officers<br><span id="adminOfficers" class="big">0</span></div>
-<div class="stat">Duty Records<br><span id="adminDuties" class="big">0</span></div>
-<div class="stat">Payroll<br><span id="adminPay" class="big">Rp0</span></div>
-</div>
-<p class="small">Admin dapat melihat laporan, bukti duty, total payroll, dan progres anggota.</p>
-</div>
-<button class="gray" onclick="signOut()">LOGOUT</button>
-<p class="small" style="text-align:center">ARP Agency • GTA Roleplay</p>
+  <div class="footer">one song • one story • one forever ♡</div>
+</section>
 </main>
-</div>
+
+<div class="toast" id="toast">Makasih sudah tetap di sini. ♡</div>
 
 <script>
-const SUPABASE_URL="https://vxuxbxecnyyywocqzwtx.supabase.co";
-const SUPABASE_KEY="sb_publishable_JUSh0iOq0E_Z-nY80S3opA_ue4615vL"; // gunakan publishable/anon key, bukan service_role
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const canvas=document.getElementById("canvas"),ctx=canvas.getContext("2d");
+let W,H,particles=[];
+function resize(){
+  W=innerWidth;H=innerHeight;
+  const d=devicePixelRatio||1;
+  canvas.width=W*d;canvas.height=H*d;canvas.style.width=W+"px";canvas.style.height=H+"px";
+  ctx.setTransform(d,0,0,d,0,0);
+  particles=Array.from({length:Math.min(260,Math.floor(W/3.5))},()=>({
+    x:Math.random()*W,y:Math.random()*H,s:.25+Math.random()*1.2,
+    r:.5+Math.random()*1.7,a:.15+Math.random()*.7,d:(Math.random()-.5)*.25
+  }));
+}
+addEventListener("resize",resize);resize();
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  for(const p of particles){
+    p.y+=p.s;p.x+=p.d;
+    if(p.y>H+5){p.y=-5;p.x=Math.random()*W}
+    ctx.beginPath();
+    ctx.fillStyle=`rgba(255,${125+Math.random()*80},${190+Math.random()*60},${p.a})`;
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
+  }
+  requestAnimationFrame(draw);
+}
+draw();
 
-const RANKS=[
-{name:"Police Officer I",next:"Police Officer II",hours:5},
-{name:"Police Officer II",next:"Police Officer III",hours:8},
-{name:"Police Officer III",next:"Senior Police Officer",hours:12},
-{name:"Senior Police Officer",next:"Corporal",hours:16},
-{name:"Corporal",next:"Sergeant I",hours:20},
-{name:"Sergeant I",next:"Sergeant II",hours:25},
-{name:"Sergeant II",next:"Lieutenant",hours:30},
-{name:"Lieutenant",next:"Captain",hours:36},
-{name:"Captain",next:"Commander",hours:42},
-{name:"Commander",next:"Deputy Chief",hours:50},
-{name:"Deputy Chief",next:"Assistant Chief",hours:60},
-{name:"Assistant Chief",next:"Chief of Police",hours:72},
-{name:"Chief of Police",next:null,hours:null}
+const countdown=document.getElementById("countdown"),num=document.getElementById("countNumber");
+let n=3;
+const cd=setInterval(()=>{
+  n--;
+  if(n>0){
+    num.textContent=n;num.style.animation="none";void num.offsetWidth;num.style.animation="pop .9s ease";
+  }else{
+    clearInterval(cd);countdown.classList.add("hide");startTyping();
+    // The Spotify iframe is configured with autoplay=1.
+    // Browsers may still require one user interaction before allowing sound.
+  }
+},900);
+
+const lines=[
+  "Some people become a chapter. You became my home.",
+  "Makasih sudah bertahan sejauh ini... dan masih memilih aku.",
+  "Kalau boleh, mari terus bersama. Bukan cuma hari ini, tapi selamanya."
 ];
-
-let user=null,profile=null,activeDuty=null;
-const money=n=>new Intl.NumberFormat("id-ID",{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(n||0);
-const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
-
-function fillRanks(){rank.innerHTML=RANKS.map(x=>`<option>${x.name}</option>`).join("")}
-function getRedirectUrl(){
- return window.location.origin + window.location.pathname;
-}
-async function signInWithDiscord(){
- loginMsg.textContent="Membuka Discord...";
- const {error}=await db.auth.signInWithOAuth({
-  provider:"discord",
-  options:{redirectTo:getRedirectUrl()}
- });
- if(error)loginMsg.textContent=error.message;
-}
-async function start(u){
- user=u;
- const {data:authz,error:authzError}=await db.rpc("authorize_discord");
- if(authzError)return loginMsg.textContent="Gagal memeriksa authorization: "+authzError.message;
- if(!authz?.authorized){
-  await db.auth.signOut();
-  loginMsg.textContent="Akun Discord ini belum di-authorized oleh admin.";
-  return;
- }
- const {data,error}=await db.from("profiles").select("*").eq("id",u.id).single();
- if(error)return loginMsg.textContent=error.message;
- profile=data;login.classList.add("hidden");app.classList.remove("hidden");
- name.value=profile.name||"";callsign.value=profile.callsign||"";rank.value=profile.rank||RANKS[0].name;
- await refresh();
-}
-async function refresh(){await loadProfile();await loadVerifiers();await loadActive();await loadHistory();await loadVerifierQueue();await checkPromotion();await loadAdmin()}
-async function loadProfile(){
- const {data}=await db.from("profiles").select("*").eq("id",user.id).single();
- if(data){profile=data;name.value=data.name||"";callsign.value=data.callsign||"";rank.value=data.rank||RANKS[0].name}
- const {data:d}=await db.from("duty_records").select("duration_minutes,salary").eq("officer_id",user.id).eq("status","completed");
- const mins=(d||[]).reduce((a,x)=>a+Number(x.duration_minutes||0),0);
- const pay=(d||[]).reduce((a,x)=>a+Number(x.salary||0),0);
- totalHours.textContent=(mins/60).toFixed(2)+" h";totalPay.textContent=money(pay);totalDuties.textContent=(d||[]).length;
- const {data:a}=await db.from("duty_records").select("*").eq("officer_id",user.id).eq("status","active").maybeSingle();
- activeDuty=a||null;status.textContent=activeDuty?"ON DUTY":"OFF DUTY";status.className="big "+(activeDuty?"greenText":"");
- clockInBtn.disabled=!!activeDuty;clockOutBtn.disabled=!activeDuty;dutyBox.classList.toggle("hidden",!activeDuty);
- if(activeDuty)dutyBox.innerHTML=`ON DUTY sejak <b>${new Date(activeDuty.clock_in).toLocaleString("id-ID")}</b>`;
-}
-async function loadVerifiers(){
- const {data}=await db.from("profiles").select("id,name,callsign").neq("id",user.id).order("name");
- verifier.innerHTML='<option value="">Pilih officer lain</option>'+(data||[]).map(x=>`<option value="${x.id}">${esc(x.name)} — ${esc(x.callsign)}</option>`).join("");
- if(activeDuty?.verifier_id)verifier.value=activeDuty.verifier_id;
-}
-async function saveProfile(){
- const v={name:name.value.trim(),callsign:callsign.value.trim()};
- if(!v.name||!v.callsign)return alert("Isi nama dan callsign."),false;
- const {error}=await db.from("profiles").update(v).eq("id",user.id);
- if(error)return alert(error.message),false;
- profile={...profile,...v};return true;
-}
-async function clockIn(){
- if(!(await saveProfile()))return;
- const vid=verifier.value;if(!vid)return alert("Pilih officer lain sebagai verifier.");
- if(vid===user.id)return alert("Verifier harus officer lain.");
- const {data,error}=await db.from("duty_records").insert({
-  officer_id:user.id,officer_name:profile.name,callsign:profile.callsign,rank:profile.rank,
-  verifier_id:vid,clock_in:new Date().toISOString(),status:"active"
- }).select().single();
- if(error)return alert(error.message);
- activeDuty=data;await refresh();
-}
-function openClockOut(){if(!activeDuty)return;clockOutCard.classList.remove("hidden");scrollTo({top:clockOutCard.offsetTop-20,behavior:"smooth"})}
-proofs.onchange=()=>{if(proofs.files.length>3){proofs.value="";fileMsg.textContent="Maksimal 3 screenshot.";return}fileMsg.textContent=`${proofs.files.length} screenshot dipilih.`}
-async function submitClockOut(){
- if(!activeDuty)return;
- const files=[...proofs.files];if(files.length<1||files.length>3)return alert("Wajib 1–3 screenshot.");
- const vid=verifier.value;if(!vid||vid===user.id)return alert("Pilih verifier officer lain.");
- const end=new Date(),mins=Math.max(1,Math.floor((end-new Date(activeDuty.clock_in))/60000)),urls=[];
- for(let i=0;i<files.length;i++){
-  if(files[i].size>6*1024*1024)return alert("Setiap screenshot maksimal 6 MB.");
-  const ext=(files[i].name.split(".").pop()||"jpg").toLowerCase(),path=`${user.id}/${activeDuty.id}-${i}.${ext}`;
-  const up=await db.storage.from("duty-proofs").upload(path,files[i],{contentType:files[i].type,upsert:false});
-  if(up.error)return alert("Upload bukti gagal: "+up.error.message);
-  const s=await db.storage.from("duty-proofs").createSignedUrl(path,60*60*24*365);
-  if(s.error)return alert("Gagal membuat link bukti: "+s.error.message);
-  urls.push(s.data.signedUrl);
- }
- const {error}=await db.from("duty_records").update({clock_out:end.toISOString(),duration_minutes:mins,proof_urls:urls,status:"pending"}).eq("id",activeDuty.id).eq("officer_id",user.id);
- if(error)return alert(error.message);
- proofs.value="";fileMsg.textContent="Pilih 1–3 screenshot.";clockOutCard.classList.add("hidden");await refresh();alert("Duty dikirim ke verifier. Gaji akan diisi oleh officer lain yang kamu pilih.");
-}
-async function loadActive(){
- const {data,error}=await db.from("duty_records").select("*").eq("status","active").order("clock_in");
- if(error)return active.textContent=error.message;
- active.innerHTML=data?.length?data.map(x=>`<div class="officer"><b>🟢 ${esc(x.callsign)}</b><br>${esc(x.officer_name)}<br>${esc(x.rank)}<br>ON DUTY — ${new Date(x.clock_in).toLocaleTimeString("id-ID")}</div>`).join(""):"Belum ada officer yang duty.";
-}
-async function loadHistory(){
- const {data,error}=await db.from("duty_records").select("*").eq("status","completed").order("clock_out",{ascending:false}).limit(50);
- if(error)return history.textContent=error.message;
- history.innerHTML=data?.length?data.map(x=>`<div class="history"><b>${esc(x.officer_name)}</b> • ${esc(x.callsign)}<br>${esc(x.rank)}<br>Clock In: ${new Date(x.clock_in).toLocaleString("id-ID")}<br>Clock Out: ${new Date(x.clock_out).toLocaleString("id-ID")}<br>Total: ${Math.floor(x.duration_minutes/60)}j ${x.duration_minutes%60}m<br>Gaji: <b>${money(x.salary)}</b><div class="proofs">${(x.proof_urls||[]).map(u=>`<a href="${u}" target="_blank"><img class="proof" src="${u}"></a>`).join("")}</div></div>`).join(""):"Belum ada riwayat.";
-}
-async function checkPromotion(){
- const {data,error}=await db.rpc("check_and_promote");
- if(error)return;
- if(data?.eligible){
-  promotionNotice.innerHTML=`<div class="notice"><b>🎖️ KENAIKAN PANGKAT</b><br>Selamat! Syarat untuk <b>${esc(data.new_rank)}</b> telah terpenuhi.<br>Total duty: ${Number(data.total_hours).toFixed(2)} jam.</div>`;
-  await loadProfile();
- }else if(data?.next_rank){
-  promotionNotice.innerHTML=`<div class="notice">Progress: <b>${esc(data.current_rank)}</b> → ${esc(data.next_rank)} — ${Number(data.total_hours).toFixed(2)} / ${Number(data.required_hours).toFixed(2)} jam.</div>`;
- }
-}
-async function loadVerifierQueue(){
- const {data,error}=await db.from("duty_records").select("*").eq("verifier_id",user.id).eq("status","pending").order("clock_out",{ascending:false});
- verifyCard.classList.toggle("hidden",!data?.length);
- if(error){verifyCard.classList.remove("hidden");verifyQueue.textContent=error.message;return}
- if(!data?.length)return;
- verifyQueue.innerHTML=data.map(x=>`<div class="history">
- <b>${esc(x.officer_name)}</b> • ${esc(x.callsign)}<br>
- Pangkat: ${esc(x.rank)}<br>
- Duty: ${Math.floor(x.duration_minutes/60)}j ${x.duration_minutes%60}m<br>
- Clock Out: ${new Date(x.clock_out).toLocaleString("id-ID")}
- <div class="proofs">${(x.proof_urls||[]).map(u=>`<a href="${u}" target="_blank"><img class="proof" src="${u}"></a>`).join("")}</div>
- <label>Nominal gaji</label>
- <input id="salary_${x.id}" type="number" min="50000" max="150000" step="5000" value="75000">
- <button class="green" onclick="approveDuty('${x.id}')">APPROVE DUTY</button>
- </div>`).join("");
-}
-async function approveDuty(id){
- const input=document.getElementById("salary_"+id);
- const sal=Number(input.value);
- if(!Number.isFinite(sal)||sal<50000||sal>150000)return alert("Gaji harus Rp50.000–Rp150.000.");
- const {data,error}=await db.rpc("approve_duty",{p_duty_id:id,p_salary:sal});
- if(error)return alert(error.message);
- alert("Duty disetujui. Gaji "+money(sal)+" dicatat.");
- await refresh();
+let li=0,ci=0;
+const typed=document.getElementById("typed");
+function startTyping(){typeLine()}
+function typeLine(){
+  const line=lines[li];
+  if(ci<line.length){typed.textContent+=line[ci++];setTimeout(typeLine,42)}
+  else setTimeout(()=>{typed.textContent="";ci=0;li=(li+1)%lines.length;typeLine()},2600)
 }
 
-async function loadAdmin(){
- if(profile.role!=="admin")return;
- adminCard.classList.remove("hidden");
- const {data:p}=await db.from("profiles").select("id");adminOfficers.textContent=p?.length||0;
- const {data:d}=await db.from("duty_records").select("salary,duration_minutes").eq("status","completed");
- adminDuties.textContent=d?.length||0;adminPay.textContent=money((d||[]).reduce((a,x)=>a+Number(x.salary||0),0));
-}
-async function signOut(){await db.auth.signOut();location.reload()}
-fillRanks();
-db.auth.getSession().then(async({data})=>{if(data.session)await start(data.session.user)});
+const openBtn=document.getElementById("openBtn");
+const letter=document.getElementById("letter");
+const song=document.getElementById("song");
+const toast=document.getElementById("toast");
+
+openBtn.addEventListener("click",()=>{
+  letter.classList.toggle("open");
+  song.classList.toggle("open");
+  openBtn.textContent=letter.classList.contains("open")?"Close my heart ♡":"Open my heart ♡";
+  toast.textContent=letter.classList.contains("open")
+    ?"Makasih sudah tetap bersama aku. Selamanya, ya? ♡"
+    :"Come back when you're ready. ♡";
+  toast.classList.add("show");
+  setTimeout(()=>toast.classList.remove("show"),2600);
+});
 </script>
 </body>
 </html>
